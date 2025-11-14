@@ -1,152 +1,85 @@
 import javax.swing.*;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import javax.swing.JOptionPane;
+//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
+// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
+        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
+        // to see how IntelliJ IDEA suggests fixing it.
+        System.out.printf("Hello and welcome!");
 
-        solicitarEquipo();
-        solicitarJugador();
-
+        for (int i = 1; i <= 5; i++) {
+            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
+            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
+            System.out.println("i = " + i);
+            System.out.println("i = " + i);
+        }
     }
-    public static String validarSolicitarDatos(String dato, String mensaje, String expresionRegular) {
-        boolean error;
-        String var = "";
+}
+
+class EquipoJugador {
+    public static void main(String[] args) {
+        String nombreEquipo = "";
+        String ciudad = "";
+        int anioFundacion = 0;
+        String nombreJugador = "";
+        int edad = 0;
+        String posicion = "";
 
         do {
-            error = false;
-            try {
-                var = JOptionPane.showInputDialog(mensaje);
-
-                if (var == null) {
-                    throw new DatoNoValido("Tienes que introducir un valor para " + dato);
-                }
-
-                if (var.trim().isEmpty()) {
-                    throw new DatoNoValido(dato + " no puede estar vacio");
-                }
-
-                if (!expresionRegular.isEmpty()) {
-                    Pattern patron = Pattern.compile(expresionRegular);
-                    Matcher mat = patron.matcher(var);
-
-                    if (!mat.matches()) {
-                        throw new DatoNoValido(dato + " no tiene un formato valido");
-                    }
-                }
-
-            } catch (Exception e) {
-                error = true;
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        } while (error);
-
-        return var;
-    }
-
-    public static void solicitarEquipo() {
-        String nombre = validarSolicitarDatos("Nombre del equipo", "Introduce el nombre del equipo", "^[a-zA-Z]+[a-zA-Z0-9]*$");
-        LocalDate fechaFundacion = solicitarValidarFechas("Fecha de fundacion del equipo", "Indica la fecha de fundacion del equipo (DD/MM/YYYY)");
-        int numJugadores = Integer.parseInt(validarSolicitarDatos("Numero de jugadores", "Indica el numero de jugadores que tiene el equipo (6 como maximo)", "^[0-6]$"));
-
-        JOptionPane.showMessageDialog(null,
-                "Equipo registrado:\n" +
-                        "Nombre: " + nombre + "\n" +
-                        "Fecha Fundación: " + fechaFundacion.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "\n" +
-                        "Número de Jugadores: " + numJugadores);
-    }
-
-    public static LocalDate solicitarValidarFechas(String dato, String mensaje) {
-        String var = "";
-        boolean error;
-        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate fecha = null;
+            nombreEquipo = JOptionPane.showInputDialog("Introduce el nombre del equipo:");
+            if (nombreEquipo == null) return;
+        } while (nombreEquipo.trim().isEmpty());
 
         do {
-            error = false;
-            try {
-                var = JOptionPane.showInputDialog(mensaje);
+            ciudad = JOptionPane.showInputDialog("Introduce la ciudad del equipo:");
+            if (ciudad == null) return;
+        } while (ciudad.trim().isEmpty());
 
-                if (var == null) {
-                    throw new DatoNoValido("Tienes que introducir un valor para " + dato);
-                }
-
-                if (var.trim().isEmpty()) {
-                    throw new DatoNoValido("La " + dato + " no puede estar vacia");
-                }
-
-                fecha = LocalDate.parse(var, formatoFecha);
-
-            } catch (DateTimeParseException e) {
-                error = true;
-                JOptionPane.showMessageDialog(null, "La fecha no tiene un formato valido. Use DD/MM/YYYY", "Error", JOptionPane.ERROR_MESSAGE);
-            } catch (DatoNoValido e) {
-                error = true;
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        } while (error);
-
-        return fecha;
-    }
-
-    public static void solicitarJugador() {
-        String nombre = validarSolicitarDatos("Nombre", "Introduce el nombre del jugador", "^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$");
-        String apellido = validarSolicitarDatos("Apellido", "Introduce el apellido del jugador", "^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$");
-        String nacionalidad = validarSolicitarDatos("Nacionalidad", "Introduce la nacionalidad del jugador", "^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$");
-        String nickName = validarSolicitarDatos("NickName", "Introduce el nickName del jugador", "^[a-zA-Z0-9_]+$");
-        String rol = validarSolicitarDatos("Rol", "Introduce el rol del jugador", "^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$");
-        double sueldo = validarSueldo("Sueldo", "Introduce el sueldo del jugador");
-
-        JOptionPane.showMessageDialog(null,
-                "Jugador registrado:\n" +
-                        "Nombre: " + nombre + "\n" +
-                        "Apellido: " + apellido + "\n" +
-                        "Nacionalidad: " + nacionalidad + "\n" +
-                        "NickName: " + nickName + "\n" +
-                        "Rol: " + rol + "\n" +
-                        "Sueldo: " + sueldo + "€");
-    }
-
-    public static double validarSueldo(String dato, String mensaje) {
-        double sueldoMinimoInterpersonal = 1184;
-        String var = "";
-        boolean error;
-        double sueldo = 0;
-
+        boolean valido = false;
         do {
-            error = false;
             try {
-                var = JOptionPane.showInputDialog(mensaje);
-
-                if (var == null) {
-                    throw new DatoNoValido("Tienes que introducir un valor para " + dato);
+                anioFundacion = Integer.parseInt(JOptionPane.showInputDialog("Introduce el año de fundación del equipo:"));
+                if (anioFundacion > 1850 && anioFundacion <= 2025) {
+                    valido = true;
+                } else {
+                    JOptionPane.showMessageDialog(null, "El año debe estar entre 1850 y 2025.");
                 }
-
-                if (var.trim().isEmpty()) {
-                    throw new DatoNoValido(dato + " no puede estar vacio");
-                }
-
-                sueldo = Double.parseDouble(var.replace(",", "."));
-
-                if (sueldo < sueldoMinimoInterpersonal) {
-                    throw new DatoNoValido(dato + " no puede ser menor que el Salario Mínimo Interprofesional (1184€)");
-                }
-
             } catch (NumberFormatException e) {
-                error = true;
-                JOptionPane.showMessageDialog(null, dato + " debe ser un número válido", "Error", JOptionPane.ERROR_MESSAGE);
-            } catch (DatoNoValido e) {
-                error = true;
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            } catch (Exception e) {
-                error = true;
-                JOptionPane.showMessageDialog(null, "Error inesperado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Debes introducir un número válido.");
             }
-        } while (error);
+        } while (!valido);
+        do {
+            nombreJugador = JOptionPane.showInputDialog("Introduce el nombre del jugador:");
+            if (nombreJugador == null) return;
+        } while (nombreJugador.trim().isEmpty());
+        valido = false;
+        do {
+            try {
+                edad = Integer.parseInt(JOptionPane.showInputDialog("Introduce la edad del jugador:"));
+                if (edad > 0 && edad <= 50) {
+                    valido = true;
+                } else {
+                    JOptionPane.showMessageDialog(null, "La edad debe estar entre 1 y 50 años.");
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Debes introducir un número válido.");
+            }
+        } while (!valido);
+        do {
+            posicion = JOptionPane.showInputDialog("Introduce la posición del jugador:");
+            if (posicion == null) return;
+        } while (posicion.trim().isEmpty());
+        String mensaje = "DATOS DEL EQUIPO\n"
+                + "Nombre: " + nombreEquipo + "\n"
+                + "Ciudad: " + ciudad + "\n"
+                + "Año de fundación: " + anioFundacion + "\n\n"
+                + " DATOS DEL JUGADOR\n"
+                + "Nombre: " + nombreJugador + "\n"
+                + "Edad: " + edad + "\n"
+                + "Posición: " + posicion;
 
-        return sueldo;
+        JOptionPane.showMessageDialog(null, mensaje);
+
     }
 }
