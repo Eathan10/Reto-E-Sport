@@ -10,8 +10,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Main {
-    static ArrayList<String> todosLosJugadores = new ArrayList<>();
-    static ArrayList<String> todosLosEquipos = new ArrayList<>();
     public static void main(String[] args) {
 
         int opcion;
@@ -20,9 +18,7 @@ public class Main {
                     "------- Introducir jugador o equipo nuevo --------\n"
                             + "1 - JUGADOR\n"
                             + "2 - EQUIPO\n"
-                            + "3 - MOSTRAR JUGADORES\n"
-                            + "4 - MOSTRAR EQUIPOS\n"
-                            + "5 - SALIR\n"
+                            + "3 - SALIR\n"
                             + "Introduce una opción: "
             );
 
@@ -31,7 +27,7 @@ public class Main {
                 break;
             }
 
-            try{
+            try {
                 opcion = Integer.parseInt(entrada);
 
                 switch (opcion) {
@@ -42,25 +38,21 @@ public class Main {
                         equipo();
                         break;
                     case 3:
-                        mostrarJugadores();
-                        break;
-                    case 4:
-                        mostrarEquipos();
-                        break;
-                    case 5:
-                        JOptionPane.showMessageDialog(null,"saliendo del programa");
+                        JOptionPane.showMessageDialog(null, "saliendo del programa");
                         break;
                     default:
-                        JOptionPane.showMessageDialog(null,"La opcion elegida no es valida ");
+                        JOptionPane.showMessageDialog(null, "La opcion elegida no es valida ");
                         break;
                 }
-            }catch(NumberFormatException e){
-                JOptionPane.showMessageDialog(null,"ERROR. La opcion no es valida ");
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "ERROR. La opcion no es valida ");
                 opcion = 0;
             }
-        }while(opcion!=5);
-    }
+        } while (opcion != 3);
 
+
+
+    }
 
 
     private static void jugador() {
@@ -104,12 +96,11 @@ public class Main {
                 if (mat.matches()) {
                     JOptionPane.showMessageDialog(null, "Nickname Valido");
                     nicknameValido = true;
-                }else  {
+                } else {
                     JOptionPane.showMessageDialog(null, "Nickname Invalido");
                     nicknameValido = false;
                 }
-            }while(!nicknameValido);
-
+            } while (!nicknameValido);
 
             int edad;
             LocalDate fechaNacimiento = null;
@@ -144,29 +135,29 @@ public class Main {
             boolean nacionalidadValida = false;
             do {
                 nacionalidadjugador = JOptionPane.showInputDialog(null, "Ingrese la nacionalidad del JUGADOR");
-                if(nacionalidadjugador.isEmpty()) {
+                if (nacionalidadjugador.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Debe ingresar una nacionalidad");
                     nacionalidadValida = false;
-                }else if(!nacionalidadjugador.matches("^[A-Za-záéíóúÁÉÍÓÚñÑ ]+$")){
+                } else if (!nacionalidadjugador.matches("^[A-Za-záéíóúÁÉÍÓÚñÑ ]+$")) {
                     JOptionPane.showMessageDialog(null, "ERROR: La nacionalidad solo puede contener letras");
                     nacionalidadValida = false;
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "nacionalidad correcta");
                     nacionalidadValida = true;
                 }
-            }while(!nacionalidadValida);
+            } while (!nacionalidadValida);
 
 
             double sueldo = 0;
             boolean sueldoValida = false;
-            do{
-                try{
+            do {
+                try {
                     String input = JOptionPane.showInputDialog(null, "Ingrese el sueldo del JUGADOR");
                     sueldo = Double.parseDouble(input);
                     if (sueldo > 1184.0) {
                         JOptionPane.showMessageDialog(null, "Sueldo valido");
                         sueldoValida = true;
-                    }else  {
+                    } else {
                         JOptionPane.showMessageDialog(null, "Sueldo invalido");
                         sueldoValida = false;
                     }
@@ -174,18 +165,20 @@ public class Main {
                     JOptionPane.showMessageDialog(null, "ERROR. Sueldo Invalido");
                     sueldoValida = false;
                 }
-            }while(!sueldoValida);
+            } while (!sueldoValida);
 
-            todosLosJugadores.add("Nombre: " + nombreJugador
-                    + "\nApellido: " + apellidoJugador
-                    + "\nNickname: " + nickname
-                    + "\nFecha de Nacimiento: " + fechaNacimiento
-                    + "\nEdad: " + edad
-                    + "\nNacionalidad: " + nacionalidadjugador
-                    + "\nSueldo: " + sueldo);
-            JOptionPane.showMessageDialog(null, "Jugador añadido correctamente.");
+            JOptionPane.showMessageDialog(null,
+                    "------------MENU JUGADOR-------------\n"
+                            + "1 - El nombre del Jugador es: " + nombreJugador
+                            + "\n2 - El apellido del Jugador es: " + apellidoJugador
+                            + "\n3 - El nickname del jugador es: " + nickname
+                            + "\n4 - La fecha de nacimineto del jugador es: " + fechaNacimiento +"de edad: "+ edad
+                            + "\n5 - La nacionalidad del jugador es: " + nacionalidadjugador
+                            + "\n6 - El sueldo del jugador es de: "+ sueldo
+            );
 
-        }catch(NullPointerException e){
+
+        } catch (NullPointerException e) {
             JOptionPane.showMessageDialog(null, "Saliendo del programa");
             System.exit(0);
         }
@@ -212,7 +205,13 @@ public class Main {
             int numeroJugadores = 0;
             boolean numeroJugadoresValidos = false;
             do {
-                String input = JOptionPane.showInputDialog(null, "Ingrese el numero de jugadores en el equipo");
+                String input = null;
+                input = JOptionPane.showInputDialog(null, "Ingrese el numero de jugadores en el equipo");
+                if (input == null) {
+                    JOptionPane.showMessageDialog(null, "Saliendo del programa.");
+                    System.exit(0); ;
+                }
+
                 try {
                     numeroJugadores = Integer.parseInt(input);
                     if (numeroJugadores >= 2 && numeroJugadores <= 6) {
@@ -232,7 +231,7 @@ public class Main {
 
             LocalDate fechaCreacionEqupio = null;
             boolean fechaEquipoValida = false;
-            do{
+            do {
                 try {
                     String input = JOptionPane.showInputDialog(null, "Ingrese la fecha de creacion del equipo: ");
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -240,53 +239,30 @@ public class Main {
                     if (fechaCreacionEqupio.isBefore(LocalDate.now())) {
                         JOptionPane.showMessageDialog(null, "Fecha correctamente introducida");
                         fechaEquipoValida = true;
-                    }else {
+                    } else {
                         JOptionPane.showMessageDialog(null, "Fecha introducida de creacion no es valida");
                         fechaEquipoValida = false;
                     }
-                }catch(DateTimeParseException e){
+                } catch (DateTimeParseException e) {
                     JOptionPane.showMessageDialog(null, "ERROR. Datos introducidos no son validos");
                     fechaEquipoValida = false;
                 }
-            }while(!fechaEquipoValida);
+            } while (!fechaEquipoValida);
 
-            todosLosEquipos.add("Nombre: " + nombreEquipo
-                    + "\nNumero de jugadores en el equipo: " + numeroJugadores
-                    + "\nFecha de creracion del equipo: " + fechaCreacionEqupio);
-            JOptionPane.showMessageDialog(null, "Equipo añadido correctamente.");
+            JOptionPane.showMessageDialog(null,
+                    "------------MENU EQUIPO-------------\n"
+                            + "1 - El nombre del EQUIPO es: " + nombreEquipo
+                            + "\n2 - El numero de jugadores del EQUIPO es de : " + numeroJugadores
+                            + "\n3 - La fecha de creacion del EQUIPO es de: " + fechaCreacionEqupio
 
-        }catch (NullPointerException e){
+            );
+
+
+        } catch (NullPointerException e) {
             JOptionPane.showMessageDialog(null, "Saliendo del programa");
             System.exit(0);
         }
     }
 
-    private static void mostrarJugadores() {
-
-        if (todosLosJugadores.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "todavia no se han ingresado jugadores");
-            return;
-        }
-
-        StringBuilder mensaje = new StringBuilder("Jugadores creados hasta ahora:\n");
-        for (int i = 0; i < todosLosJugadores.size(); i++) {
-            mensaje.append(i + 1).append(" - ").append(todosLosJugadores.get(i)).append("\n");
-        }
-
-        JOptionPane.showMessageDialog(null, mensaje.toString());
-    }
-
-    private static void mostrarEquipos() {
-        if (todosLosEquipos.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "todavia no se han ingresado ningun equipo");
-            return;
-        }
-        StringBuilder mensaje = new StringBuilder("Jugadores creados hasta ahora:\n");
-        for (int i = 0; i < todosLosEquipos.size(); i++) {
-            mensaje.append(i + 1).append(" - ").append(todosLosEquipos.get(i)).append("\n");
-        }
-
-        JOptionPane.showMessageDialog(null, mensaje.toString());
-    }
 }
 
