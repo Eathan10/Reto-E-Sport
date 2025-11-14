@@ -1,4 +1,5 @@
 
+
 import javax.swing.JOptionPane;
 import java.time.LocalDate;
 import java.time.Period;
@@ -8,11 +9,11 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 public class Main {
     static ArrayList<String> todosLosJugadores = new ArrayList<>();
     static ArrayList<String> todosLosEquipos = new ArrayList<>();
     public static void main(String[] args) {
+
         int opcion;
         do {
             String entrada = JOptionPane.showInputDialog(
@@ -288,3 +289,4 @@ public class Main {
         JOptionPane.showMessageDialog(null, mensaje.toString());
     }
 }
+
