@@ -29,14 +29,14 @@ public class Main {
                     throw new DatoNoValido(dato + " no puede estar vacio");
                 }
 
-                if (!expresionRegular.isEmpty()) {
-                    Pattern patron = Pattern.compile(expresionRegular);
-                    Matcher mat = patron.matcher(var);
 
-                    if (!mat.matches()) {
-                        throw new DatoNoValido(dato + " no tiene un formato valido");
-                    }
+                Pattern patron = Pattern.compile(expresionRegular);
+                Matcher mat = patron.matcher(var);
+
+                if (!mat.matches()) {
+                    throw new DatoNoValido(dato + " no tiene un formato valido");
                 }
+
 
             } catch (Exception e) {
                 error = true;
