@@ -17,20 +17,18 @@ public class Main {
         String var = "";
 
         do {
-            error = false; // Inicializar error aquí
+            error = false;
             try {
                 var = JOptionPane.showInputDialog(mensaje);
 
                 if (var == null) {
-                    // El usuario presionó cancelar
-                    System.exit(0);
+                    throw new DatoNoValido("Tienes que introducir un valor para " + dato);
                 }
 
                 if (var.trim().isEmpty()) {
                     throw new DatoNoValido(dato + " no puede estar vacio");
                 }
 
-                // Solo validar con regex si se proporciona una expresión regular
                 if (!expresionRegular.isEmpty()) {
                     Pattern patron = Pattern.compile(expresionRegular);
                     Matcher mat = patron.matcher(var);
@@ -54,7 +52,6 @@ public class Main {
         LocalDate fechaFundacion = solicitarValidarFechas("Fecha de fundacion del equipo", "Indica la fecha de fundacion del equipo (DD/MM/YYYY)");
         int numJugadores = Integer.parseInt(validarSolicitarDatos("Numero de jugadores", "Indica el numero de jugadores que tiene el equipo (6 como maximo)", "^[0-6]$"));
 
-        // Mostrar resultados (opcional)
         JOptionPane.showMessageDialog(null,
                 "Equipo registrado:\n" +
                         "Nombre: " + nombre + "\n" +
@@ -69,13 +66,12 @@ public class Main {
         LocalDate fecha = null;
 
         do {
-            error = false; // Inicializar error aquí
+            error = false;
             try {
                 var = JOptionPane.showInputDialog(mensaje);
 
                 if (var == null) {
-                    // El usuario presionó cancelar
-                    System.exit(0);
+                    throw new DatoNoValido("Tienes que introducir un valor para " + dato);
                 }
 
                 if (var.trim().isEmpty()) {
@@ -104,7 +100,6 @@ public class Main {
         String rol = validarSolicitarDatos("Rol", "Introduce el rol del jugador", "^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$");
         double sueldo = validarSueldo("Sueldo", "Introduce el sueldo del jugador");
 
-        // Mostrar resultados (opcional)
         JOptionPane.showMessageDialog(null,
                 "Jugador registrado:\n" +
                         "Nombre: " + nombre + "\n" +
@@ -122,13 +117,12 @@ public class Main {
         double sueldo = 0;
 
         do {
-            error = false; // Inicializar error aquí
+            error = false;
             try {
                 var = JOptionPane.showInputDialog(mensaje);
 
                 if (var == null) {
-                    // El usuario presionó cancelar
-                    System.exit(0);
+                    throw new DatoNoValido("Tienes que introducir un valor para " + dato);
                 }
 
                 if (var.trim().isEmpty()) {
